@@ -69,23 +69,25 @@ range =  max(v_ampini) - min(v_ampini)
 ;we create the frames and plot the densities, velocities and pressures
 if plttype eq 'contour' then begin
   
+  colors = 50+INDGEN(200)
+  
   contour, umnorm,xx,zz,/isotropic ,title='(!4 q-q!3!l00!n)/!4q!3!l00'     ,ytitle='z',xtickformat='(A1)',$
-    nlev=200,c_colors = [50:250:1],/yst,/xst, xr = [x0,xf] ,yr = [z0,zf],/fill
+    nlev=200,c_colors = colors,/yst,/xst, xr = [x0,xf] ,yr = [z0,zf],/fill
   if itype eq 'packet' and track eq 'yes' then oplot, [xc],[zc], psym=6, SYMSIZE=2
   if itype eq 'packet'                    then oplot, xtrac[0:-20],ztrac[0:-20]
   ;------------------------------------------------------------------------------------------------------
   contour, pnorm ,xx,zz,/isotropic ,title='(p-p!l00!n)/p!l00!n' , ytickformat='(A1)'  ,xtickformat='(A1)',$
-    nlev=200,c_colors = [50:250:1],/yst,/xst, xr = [x0,xf] ,yr = [z0,zf],/fill
+    nlev=200,c_colors = colors,/yst,/xst, xr = [x0,xf] ,yr = [z0,zf],/fill
   if itype eq 'packet' and track eq 'yes' then oplot, [xc],[zc], psym=6, SYMSIZE=2
   if itype eq 'packet'                    then oplot, xtrac[0:-20],ztrac[0:-20]
   ;------------------------------------------------------------------------------------------------------
   contour, vxnorm,xx,zz,/isotropic ,title='v!lx!n/C!lS00!n'     ,ytitle='z',xtitle='x',$
-    nlev=200,c_colors = [50:250:1],/yst,/xst, xr = [x0,xf] ,yr = [z0,zf],/fill
+    nlev=200,c_colors = colors,/yst,/xst, xr = [x0,xf] ,yr = [z0,zf],/fill
   if itype eq 'packet' and track eq 'yes' then oplot, [xc],[zc], psym=6, SYMSIZE=2
   if itype eq 'packet'                    then oplot, xtrac[0:-20],ztrac[0:-20]
   ;------------------------------------------------------------------------------------------------------
   contour, vznorm,xx,zz,/isotropic ,title='v!lz!n/C!lS00!n'     ,xtitle='x'           , ytickformat='(A1)',$
-    nlev=200,c_colors = [50:250:1],/yst,/xst, xr = [x0,xf] ,yr = [z0,zf],/fill
+    nlev=200,c_colors = colors,/yst,/xst, xr = [x0,xf] ,yr = [z0,zf],/fill
   if itype eq 'packet' and track eq 'yes' then oplot, [xc],[zc], psym=6, SYMSIZE=2
   if itype eq 'packet'                    then oplot, xtrac[0:-20],ztrac[0:-20]
   ;------------------------------------------------------------------------------------------------------

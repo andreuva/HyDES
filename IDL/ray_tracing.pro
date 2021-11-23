@@ -62,7 +62,7 @@ pro ray_tracing, xinit , zinit, kxinit, kzinit, csinit
   endwhile
   ;plot the points traveled by the wave with its corresponding wave vectors
   gfx = vector(kxs[0:-1:20],kzs[0:-1:20],xs[0:-1:20],zs[0:-1:20],xrange=[x0,xf],yrange=[z0,zf], $
-    title='RAY TRACING OF THE PACKET', xtit='X', ytit='Z' )
+    title='RAY TRACING OF THE PACKET', xtitle='X', ytitle='Z' )
   ;save the trayectori to plot in the advance to see the match
   xtrac = xs      &     ztrac = zs    
 end
