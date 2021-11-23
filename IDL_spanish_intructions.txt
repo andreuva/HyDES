@@ -1,0 +1,82 @@
+INSTRUCTIONES PARA USAR EL CODIGO DE SIMULACION HIDRODINÁMICA:
+
+El codigo de simulación numérica esta esta diseñado para resolver
+las ecuaciones de la hidrodinámica en 2 dimensiónes dada una perturbacion
+inicial. El código tiene varios parámetros que pueden ser ajustados como por
+ejemplo, las condiciones iniciales se pueden ESCOGER entre:
+
+ondas de sonido ('sound wave') con dos modos distintos:
+	itype: 		sound wave 
+		shape:          cosine
+		shape:          second mode
+
+condiciones iniciales gaussianas a la que se le puede añadir 
+un modo para simular el efecto ''lluvia'' en un fluido:
+	itype:		gaussian
+		rain_flag: yes
+
+condiciones periodicas impuestas por las funciones de chladni de modos de 
+vibración de una placa
+	itype:		chladni
+
+condiciónes de choque que simulan un remanente de supernova con diferentes
+funciones iniciales y numeros de mach (v0_cs actua como M0 en este modo):
+	itype:		shock
+		shape:	gaussian
+		shape:  table gauss
+		shape:  table tanh
+
+condiciones iniciales de paquete de ondas con una posible inhomogeneidad,
+por defecto viene sin inhomogeneidad, esta solo se aplica si se explicita
+	itype:		packet
+		shape:	gradient
+		shape:	discont
+
+Cualquier otra palabra para las condiciones iniciales 
+o los subtipos no contemplada resultara en un aviso y un paro del programa.
+
+Para cambiar entre las diferentes condiciones iniciales basta con
+cambiar el fichero de datain.dat con las condiciones deseadas. En este
+fichero hay una lista con los parámetros que pueden ser ajustados para 
+realizar los experimentos, entre los mas específicos estan:
+
+PLTTYPE		: Tipo de plot que queremos hacer, entre los que se encuentran:
+cutz 	--> corte en el eje z
+cutx 	--> corte en el eje x
+contour	--> contornos rellenados, con ejes, titulo y etiquetas pero muy lento e ineficiente
+color	--> valores de las matrices pasado a colores entre 0 y 255, rapido pero sin ejes y titulo
+
+TRACK		: Seguimiento en el eje z del centro del paquete de ondas si este se moviera en la dir. z
+
+BOUNDCOND	: Tipos de condiciones de contorno a elegir entre periodic y 0deriv
+
+ONDX,ONDZ	: numeros de ondas en la dirección x y z para las ondas planas y que definen el 
+		angulo del vector de ondas para los paquetes de ondas de forma que angulo = atan(ondz/ondx)
+
+WT,WP		: Anchura transversal y paralela del paquete de ondas en caso de estar ese modo seleccionado
+
+XC,ZC		: Punto inicial relativo al dominio total en el cual emepezará nuestro paquete de ondas
+		los valores han de estar entre 0 y 1 para que el paquete caiga dentro del dominio
+
+Nwave		: Numero de ondas del paquete
+
+V0_CS		: La velocidad inicial de equilibrio sobre la cual se va a realizar la perturbación. 
+		El parámetro v0_cs por tanto define la velocidad inicial en términos de la velocidad del sonido 
+		inicial cs00. Este parametro actua como el número de mach si el modo shock esta seleccionado.
+
+RAIN_FLAG 	: Discriminador para decir si queremos simular la lluvia en nuestro fluido.
+
+RAIN_CADENCE: Cadencia en itteraciones con la que queremos que se genere la lluvia.
+
+Adjunto al codigo se entregan varios ficheros datain_2d_*.dat que contienen las diferentes condiciones
+iniciales para practicar las experiencias mas relevantes del código. Para la facilidad de visualización
+estará activada la opcion 'color' en el plot, la cual permite que la visualización sea fluida, en el informe
+se entregarán las gráficas realizadas con contour ya que tienen un formato mas adecuado.
+
+El código ha de tener una carpeta 'states' dentro de 'results' donde guardará el estado del sistema
+en unas iteraciones determinadas dadas por el parámetro store cadence en datain.dat.
+Dentro de 'results' ha de existir otra carpeta llamada 'plots', donde se irán guardando
+los plots en los mismos intervalos del 'store cadence'.
+
+Si no se desea guardar ningun resultado se puede poner el store cadence superior a las
+iteraciones máximas. Las condiciones iniciales se guardan y se plotean por defecto.
