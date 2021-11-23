@@ -148,8 +148,8 @@ endif else if itype eq 'chladni' then begin
   
   Uminit   = Um00  + Um00     *ampl*hz
   presinit = p00   + gamm*p00 *ampl*hz
-  vxinit   = v00   + cs00     *ampl*hz_vx
-  vzinit   = v00   + cs00     *ampl*hz_vz
+  vxinit   =         cs00     *ampl*hz_vx
+  vzinit   =         cs00     *ampl*hz_vz
 
 ;if we want to simulate a shock
 endif else if itype eq 'shock' then begin
@@ -256,7 +256,7 @@ endif else if itype eq 'packet' then begin
       hz_vx[ii,jj] =   hz[ii,jj]*cos(theta)
       hz_vz[ii,jj] =   hz[ii,jj]*sin(theta)
       
-      disc[ii,jj]  = (1d0 - tanh((zi-z1)/0.2d0 ))/2d0
+      disc[ii,jj]  = (1d0 - tanh((zi)/0.1d0 ))/2d0
       
       if zi le z1 then begin
         disc_2[ii,jj]= Um00
@@ -270,8 +270,8 @@ endif else if itype eq 'packet' then begin
   
   ;chose for the tipe of discontinuity in the medium (or homogeneus by default) 
   if shape eq 'discont' then begin
-    Uminit   = Um00  + Um00*ampl*hz + (-Um00 + Um01)*disc
-    Um00     = Um00 + (-Um00 + Um01)*disc 
+    Uminit   = Um00  + Um00*ampl*hz + (Um00 - Um01)*disc
+    Um00     = Um00 + (Um00 - Um01)*disc 
   endif else if shape eq 'gradient' then begin
     Uminit   =         Um00*ampl*hz +  disc_2
     Um00     = disc_2
@@ -280,8 +280,8 @@ endif else if itype eq 'packet' then begin
   endelse
   
   presinit = p00   + gamm*p00 *ampl*hz
-  vxinit   = v00   + cs00     *ampl*hz_vx
-  vzinit   = v00   + cs00     *ampl*hz_vz
+  vxinit   = cs00     *ampl*hz_vx
+  vzinit   = cs00     *ampl*hz_vz
   
   ;compute the sound speed in the equilibrium and the path that will folow the wave
   csinit = sqrt(gamm*presinit/Um00)

@@ -27,7 +27,7 @@
 ; READ IN PARAMETERS
 ; ------------------
 ; OPEN THE INPUT DATA FILE
-filename = 'datain_2d.dat'
+filename = 'parameter_files/datain_2d.dat'
 openr,unit,/get_lun,filename
 strd=''   ; declare strd as a string variable for later use
 
@@ -240,7 +240,7 @@ while itt lt itmax and time lt timef do begin
     if itt mod store_cad eq 0 then begin
       save,/VARIABLES, FILENAME = 'results/states/estate_time_' $
         + strtrim(string(time,form='(f7.2)'),2)+'.sav'
-      WRITE_PNG, 'results/plots/plot_time'+strtrim(string(time,form='(f7.5)'),2)+'.png', TVRD(/TRUE)
+      WRITE_PNG, 'results/plots/plot_time'+strtrim(string(itt+1d4,form='(f7.1)'),2)+'.png', TVRD(/TRUE)
     endif
     
     ;make rain if the mode is selected:)

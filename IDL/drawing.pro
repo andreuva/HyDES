@@ -67,6 +67,13 @@ v_ampini = vvinit/cs00
 med   = (max(v_ampini) + min(v_ampini))/2
 range = max(v_ampini) - min(v_ampini)
 
+axes = 'Z'
+if plttype eq 'cutx' then begin
+  axes = 'X'
+  zc = -1d18
+endif
+if track ne 'yes' then zc = -1d18
+
 ;we create the frames and plot the densities, velocities and pressures
 ;--------------------------------------------------------------------------------
 plot ,grid,vnorm       ,/nodata ,yr=[med - range*0.80 , med + range*1.6],/yst,$
@@ -74,7 +81,7 @@ plot ,grid,vnorm       ,/nodata ,yr=[med - range*0.80 , med + range*1.6],/yst,$
   xtickformat='(A1)',ymar=[2,2]; , xtit = 'Z'
 oplot,grid,vnorm       ,color=85
 oplot,[min(grid),max(grid)],[med - range*0.5 , med - range*0.5],line=3, thick=0.7
-;oplot,[min(grid),max(grid)],[0, 0]                             ,line=3, thick=0.7
+oplot,[zc,zc],[-1d8, 1d8]                             ,line=3, thick=0.7
 oplot,[min(grid),max(grid)],[med + range*0.5 , med + range*0.5],line=3, thick=0.7
 ;--------------------------------------------------------------------------------
 plot ,grid,Umnorm       ,/nodata, yr=[-2*ampinim, +2*ampinim],/yst, $
@@ -83,13 +90,15 @@ plot ,grid,Umnorm       ,/nodata, yr=[-2*ampinim, +2*ampinim],/yst, $
 oplot,grid,Umnorm       ,color=150
 oplot,[min(grid),max(grid)],[+ampinim,+ampinim] ,line=3,thick=0.7
 oplot,[min(grid),max(grid)],[0, 0]            ,line=3,thick=0.7
+oplot,[zc,zc],[-1d8, 1d8]                     ,line=3, thick=0.7  
 oplot,[min(grid),max(grid)],[-ampinim,-ampinim] ,line=3,thick=0.7
 ;--------------------------------------------------------------------------------
 plot ,grid,pnorm        ,/nodata, yr=[-1.3*ampinip, +1.3*ampinip],/yst,$
-   xr = [min(grid),max(grid)],/xst, title= 'PRESSURE', ytit = '(p-p!l00!n)/p!l00!n',xtit = 'Z' 
+   xr = [min(grid),max(grid)],/xst, title= 'PRESSURE', ytit = '(p-p!l00!n)/p!l00!n',xtit = axes 
 oplot,grid,pnorm        ,color=190
 oplot,[min(grid),max(grid)],[+ampinip,+ampinip] ,line=3,thick=0.7
 oplot,[min(grid),max(grid)],[0, 0]                      ,line=3,thick=0.7
+oplot,[zc,zc],[-1d8, 1d8]                               ,line=3, thick=0.7
 oplot,[min(grid),max(grid)],[-ampinip,-ampinip] ,line=3,thick=0.7
 ;--------------------------------------------------------------------------------
 ; write the ITERATION and the time
