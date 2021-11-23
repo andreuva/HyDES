@@ -1,2 +1,2 @@
 # HyDES
-HidroDinamical Equation Solver Code
+HydroDinamical Equation Solver Code
