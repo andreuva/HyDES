@@ -1,15 +1,20 @@
 import json
 from domain import domain as dmn
+from display import display as dsp
+from initCond import check_inputs, compute_initial_conditions
 
-# ------------------
-# READ IN PARAMETERS
-# ------------------
+
+# read the input file
 with open('parameter_files/params.json') as file:
     params = json.load(file)
 
-# --------------------------------------
-# CREATE THE DOMAIN AND COMPUTE THE GRID
-# --------------------------------------
-domain = dmn(params["Domain"]["x0"], params["Domain"]["xf"],
-             params["Domain"]["y0"], params["Domain"]["yf"],
-             params["Domain"]["Nx"], params["Domain"]["Ny"])
+check_inputs(params)
+
+# create and compute the domain and grid
+domain = dmn(params["domain"])
+
+# create the state variables with the initial conditions
+state = compute_initial_conditions(domain, params["initCond"])
+
+# Initialize the display
+display = dsp(domain, state, params)
