@@ -46,12 +46,7 @@ def check_inputs(params):
 
 # Calculate the arrays of density, velocity and pressure at time t=0.
 def compute_initial_conditions(domain, params):
-    #   OUTPUT:  VIA state OBJECT:
-    #       Uminit:  array with the initial values of the density
-    #       vxinit:  array with the initial values of the velocity in x
-    #       vyinit:  array with the initial values of the velocity in y
-    #       presinit:array with the initial values of the pressure
-    #  ----------------------------------------------------------------------
+    # initialize the state class
     init_state = state(params)
 
     # For now, I will use only the gaussian mode
@@ -61,25 +56,14 @@ def compute_initial_conditions(domain, params):
     sigmax, sigmay = np.mean([[domain.xmax-domain.xmin], [domain.ymax-domain.ymin]], axis=1)/15
     xp, yp = np.mean([[domain.xmin, domain.xmax], [domain.ymin, domain.ymax]], axis=1)
 
+    # compute the perturbation
     pert = np.exp(-((domain.xmesh-xp)**2/(2*sigmax**2) + (domain.ymesh-yp)**2/(2*sigmay**2)))
     pert_vx = pert*2*(domain.xmesh-xp)/sigmax
     pert_vy = pert*2*(domain.ymesh-yp)/sigmay
-  
-    # compute the initial states as eq. + perturbation
-    init_state.Uminit   = init_state.Um00  + init_state.Um00                *params["ampl"]*pert
-    init_state.presinit = init_state.p00   + init_state.gamm*init_state.p00 *params["ampl"]*pert
-    init_state.vxinit   = init_state.v00   + init_state.cs00                *params["ampl"]*pert_vx
-    init_state.vyinit   = init_state.v00   + init_state.cs00                *params["ampl"]*pert_vy
 
-    # this calculates the initial values of the 'densities' for momentum and energy:
-    init_state.Upxinit  = init_state.Uminit*init_state.vxinit
-    init_state.Upzinit  = init_state.Uminit*init_state.vyinit 
-    init_state.Ueinit = init_state.presinit/(init_state.gamm-1) +\
-                        init_state.Uminit*(init_state.vxinit**2+init_state.vyinit**2)/2.
+    # add the perturbation to the initial conditions
+    init_state.initilice_conditions(pert, pert_vx, pert_vy, params["ampl"])
 
-    # this calculates the sound speed array for the initial condition:
-    init_state.csinit = np.sqrt(init_state.gamm*init_state.presinit/init_state.Uminit)
-  
     # if v00 is not set to 0 warn that the gaussian will move te center over time
     if init_state.v00 != 0:
         warnings.warn('The gaussian will be moving in the direction of k because of the inital velociti v0 in the inputs')

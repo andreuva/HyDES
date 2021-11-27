@@ -1,4 +1,5 @@
 import json
+from typing import Iterator
 from domain import domain as dmn
 from display import display as dsp
 from initCond import check_inputs, compute_initial_conditions
@@ -18,3 +19,15 @@ state = compute_initial_conditions(domain, params["initCond"])
 
 # Initialize the display
 display = dsp(domain, state, params)
+
+itteration = 0
+time = 0.0
+while itteration < params["maxIter"] and time < params["maxTime"]:
+    # update the display
+    display.update(domain , state)
+
+    # update the state variables
+    state.update()
+
+    # update the time
+    time += 10

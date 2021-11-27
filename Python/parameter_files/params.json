@@ -24,7 +24,7 @@
             },
 
     "maxIter":      1e6,
-    "finTime":      1e5,
+    "maxTime":      1e5,
     "clf":          0.97,
     "boundCond":    "0deriv",
 

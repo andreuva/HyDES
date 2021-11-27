@@ -20,8 +20,4 @@ class domain:
         self.dy = self.y[1] - self.y[0]
 
         self.xmesh, self.ymesh = np.meshgrid(self.x, self.y)
-
-        # self.xvec = np.reshape(self.xmesh, (self.xres * self.yres, 1))
-        # self.yvec = np.reshape(self.ymesh, (self.xres * self.yres, 1))
-
         self.N = self.xres * self.yres
