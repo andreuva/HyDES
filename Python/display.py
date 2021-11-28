@@ -8,7 +8,7 @@ class display:
         self.simfig.suptitle('State of the simulation')
         self.update(domain, state)
 
-    def update(self, domain, state):
+    def update(self, domain, state, time=0):
         # Plot the state
         ax_list = self.sim_ax_list.ravel()
         
