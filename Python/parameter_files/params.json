@@ -1,0 +1,35 @@
+{
+    "domain":{
+                "xmin": -10.0, "xmax": 10.0,
+                "ymin": -5.0, "ymax": 10.0,
+                "xres":256, "yres": 256
+            },
+
+    "initCond":{
+                "type":         "packet",
+                "shape":        "discont",
+                "ondx":         3,
+                "ondy":         3,
+                "sizParallel":  1,
+                "sizTransver":  2,
+                "x0":           0.1,
+                "y0":           0.1,
+                "waveNum":      15,
+                "ampl":         4e-4,
+                "v0":           0e0,
+                "magNum":       1e-3,
+
+                "rain":{"active": "False",
+                        "cadence": 25}
+            },
+
+    "maxIter":      1e6,
+    "maxTime":      1e5,
+    "clf":          0.97,
+    "boundCond":    "0deriv",
+
+    "pltCad":       5,
+    "plotType":     "color",
+    "track":        "True",
+    "savCad":       1000
+}
