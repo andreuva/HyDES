@@ -40,7 +40,7 @@ def check_inputs(params):
     # warn if no wave is selected in the wave modes
     if params["initCond"]["ondx"] == 0 and params["initCond"]["ondy"] == 0 and \
        str(params["initCond"]["type"]).lower() in ['sound wave', 'chladni', 'packet']:
-        warnings.warn(f'WARNING: There are no modes selected kx=0,kz=0 : kz=1 has been set')
+        warnings.warn(f'WARNING: There are no modes selected kx=0,ky=0 : ky=1 has been set')
         params["initCond"]["ondy"] = 1
 
 
