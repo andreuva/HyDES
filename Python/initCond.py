@@ -54,10 +54,11 @@ def compute_initial_conditions(domain, params):
     # compute the sigma and central point in relation with the fisical domain choosed
     # sigma [sigmax, sigmay]
     sigmax, sigmay = np.mean([[domain.xmax-domain.xmin], [domain.ymax-domain.ymin]], axis=1)/15
-    xp, yp = np.mean([[domain.xmin, domain.xmax], [domain.ymin, domain.ymax]], axis=1)
+    xp, yp = (domain.xmax + domain.xmin)/2, (domain.ymax + domain.xmin)/2
 
     # compute the perturbation
-    pert = np.exp(-((domain.xmesh-xp)**2/(2*sigmax**2) + (domain.ymesh-yp)**2/(2*sigmay**2)))
+    # pert = np.exp(-((domain.xmesh-xp)**2/(2*sigmax**2) + (domain.ymesh-yp)**2/(2*sigmay**2)))
+    pert = np.exp(-(((domain.xmesh-xp)/sigmax)**2 + ((domain.ymesh-yp)/sigmay)**2))
     pert_vx = pert*2*(domain.xmesh-xp)/sigmax
     pert_vy = pert*2*(domain.ymesh-yp)/sigmay
 

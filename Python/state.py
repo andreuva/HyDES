@@ -124,10 +124,10 @@ class state:
         # print("Border: ", border)
 
         if border == 'top':
-            self.Umn[0,:] = self.Umn[-1,:]
-            self.Uen[0,:] = self.Uen[-1,:]
-            self.Upxn[0,:] = self.Upxn[-1,:]
-            self.Upyn[0,:] = self.Upyn[-1,:]
+            self.Umn[0,:] = self.Umn[-2,:]
+            self.Uen[0,:] = self.Uen[-2,:]
+            self.Upxn[0,:] = self.Upxn[-2,:]
+            self.Upyn[0,:] = self.Upyn[-2,:]
         elif border == 'bottom':
             self.Umn[-1,:] = self.Umn[1,:]
             self.Uen[-1,:] = self.Uen[1,:]
