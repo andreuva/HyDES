@@ -35,31 +35,31 @@ class state:
         # Set the state of the simulation to the initial conditions
         # the 'densities', in the sense of the conservation laws, 
         # are 'Um', 'Upx', 'Upy' and  'Ue'.
-        self.vx   = self.vxinit
-        self.vy   = self.vyinit
-        self.cs   = self.csinit
-        self.pres = self.presinit  
-        self.Um   = self.Uminit
-        self.Ue   = self.Ueinit
-        self.Upx  = self.Upxinit
-        self.Upy  = self.Upyinit
-        self.Umn  = self.Um
-        self.Uen  = self.Ue
-        self.Upxn = self.Upx
-        self.Upyn = self.Upy
+        self.vx   = self.vxinit.copy()
+        self.vy   = self.vyinit.copy()
+        self.cs   = self.csinit.copy()
+        self.pres = self.presinit.copy()
+        self.Um   = self.Uminit.copy()
+        self.Ue   = self.Ueinit.copy()
+        self.Upx  = self.Upxinit.copy()
+        self.Upy  = self.Upyinit.copy()
+        self.Umn  = self.Um.copy()
+        self.Uen  = self.Ue.copy()
+        self.Upxn = self.Upx.copy()
+        self.Upyn = self.Upy.copy()
     
     def advance_step(self, domain, dt):
         # initialaice the arrays wich will contain the derivates of the fluxes  
-        self.fmxdx  = self.fmx;      self.fmydy  = self.fmy
-        self.fexdx  = self.fex;      self.feydy  = self.fey
-        self.fpxxdx = self.fpxx;     self.fpyydy = self.fpyy
-        self.fpyxdx = self.fpyx;     self.fpxydy = self.fpxy
+        self.fmxdx  = self.fmx.copy();      self.fmydy  = self.fmy.copy()
+        self.fexdx  = self.fex.copy();      self.feydy  = self.fey.copy()
+        self.fpxxdx = self.fpxx.copy();     self.fpyydy = self.fpyy.copy()
+        self.fpyxdx = self.fpyx.copy();     self.fpxydy = self.fpxy.copy()
   
         # calculate the derivates of the mas, energy and momentum fluxes in x and y
-        self.fmxdx = deriv2D(self.fmx, dx=domain.dx);     self.fmydy = deriv2D(self.fmy, dy=domain.dy)
-        self.fexdx = deriv2D(self.fex, dx=domain.dx);     self.feydy = deriv2D(self.fey, dy=domain.dy)
-        self.fpxxdx = deriv2D(self.fpxx, dx=domain.dx);   self.fpyydy = deriv2D(self.fpyy, dy=domain.dy)
-        self.fpyxdx = deriv2D(self.fpyx, dx=domain.dx);   self.fpxydy = deriv2D(self.fpxy, dy=domain.dy)
+        self.fmxdx = deriv2D(self.fmx, dx=domain.dx, axis=0);     self.fmydy = deriv2D(self.fmy, dy=domain.dy, axis=1)
+        self.fexdx = deriv2D(self.fex, dx=domain.dx, axis=0);     self.feydy = deriv2D(self.fey, dy=domain.dy, axis=1)
+        self.fpxxdx = deriv2D(self.fpxx, dx=domain.dx, axis=0);   self.fpyydy = deriv2D(self.fpyy, dy=domain.dy, axis=1)
+        self.fpyxdx = deriv2D(self.fpyx, dx=domain.dx, axis=0);   self.fpxydy = deriv2D(self.fpxy, dy=domain.dy, axis=1)
   
         # compute the densities in the time t + dt/2
         self.Umn[:-1,:-1]  = midval(self.Um)  - (dt/2)*(self.fmxdx  + self.fmydy)
@@ -72,10 +72,10 @@ class state:
         self.fmxn,self.fmyn,   self.fpxxn,self.fpxyn,self.fpyyn,self.fpyxn,  self.fexn,self.feyn = new_fluxes
   
         # calculate the derivates of the mas, energy and momentum in x and y in t+dt/2
-        self.fmxdx = deriv2D(self.fmxn, dx=domain.dx);     self.fmydy = deriv2D(self.fmyn, dy=domain.dy)
-        self.fexdx = deriv2D(self.fexn, dx=domain.dx);     self.feydy = deriv2D(self.feyn, dy=domain.dy)
-        self.fpxxdx = deriv2D(self.fpxxn, dx=domain.dx);   self.fpyydy = deriv2D(self.fpyyn, dy=domain.dy)
-        self.fpyxdx = deriv2D(self.fpyxn, dx=domain.dx);   self.fpxydy = deriv2D(self.fpxyn, dy=domain.dy)
+        self.fmxdx = deriv2D(self.fmxn, dx=domain.dx, axis=0);     self.fmydy = deriv2D(self.fmyn, dy=domain.dy, axis=1)
+        self.fexdx = deriv2D(self.fexn, dx=domain.dx, axis=0);     self.feydy = deriv2D(self.feyn, dy=domain.dy, axis=1)
+        self.fpxxdx = deriv2D(self.fpxxn, dx=domain.dx, axis=0);   self.fpyydy = deriv2D(self.fpyyn, dy=domain.dy, axis=1)
+        self.fpyxdx = deriv2D(self.fpyxn, dx=domain.dx, axis=0);   self.fpxydy = deriv2D(self.fpxyn, dy=domain.dy, axis=1)
   
         # compute the densities in the time t + dt 
         self.Umn[1:-1,1:-1] =  self.Um[1:-1,1:-1] - dt*(self.fmxdx  + self.fmydy)
@@ -83,12 +83,14 @@ class state:
         self.Upxn[1:-1,1:-1] = self.Upx[1:-1,1:-1] - dt*(self.fpxxdx + self.fpxydy)
         self.Upyn[1:-1,1:-1] = self.Upy[1:-1,1:-1] - dt*(self.fpyydy + self.fpyxdx)
 
+        print()
+
 
     def compute_fluxes(self, Um, Upx, Upy, Ue):
         vx, vy, pres = self.compute_primitive_quantities(Um, Upx, Upy, Ue)
 
-        fmx = Upx
-        fmy = Upy
+        fmx = Upx.copy()
+        fmy = Upy.copy()
 
         fpxx = Upx*Upx/Um + pres
         fpxy = Upx*Upy/Um 
@@ -124,33 +126,33 @@ class state:
         # print("Border: ", border)
 
         if border == 'top':
-            self.Umn[0,:] = self.Umn[-2,:]
-            self.Uen[0,:] = self.Uen[-2,:]
-            self.Upxn[0,:] = self.Upxn[-2,:]
-            self.Upyn[0,:] = self.Upyn[-2,:]
+            self.Umn[0,:] = self.Umn[-2,:].copy()
+            self.Uen[0,:] = self.Uen[-2,:].copy()
+            self.Upxn[0,:] = self.Upxn[-2,:].copy()
+            self.Upyn[0,:] = self.Upyn[-2,:].copy()
         elif border == 'bottom':
-            self.Umn[-1,:] = self.Umn[1,:]
-            self.Uen[-1,:] = self.Uen[1,:]
-            self.Upxn[-1,:] = self.Upxn[1,:]
-            self.Upyn[-1,:] = self.Upyn[1,:]
+            self.Umn[-1,:] = self.Umn[1,:].copy()
+            self.Uen[-1,:] = self.Uen[1,:].copy()
+            self.Upxn[-1,:] = self.Upxn[1,:].copy()
+            self.Upyn[-1,:] = self.Upyn[1,:].copy()
         elif border == 'left':
-            self.Umn[:,0] = self.Umn[:,-2]
-            self.Uen[:,0] = self.Uen[:,-2]
-            self.Upxn[:,0] = self.Upxn[:,-2]
-            self.Upyn[:,0] = self.Upyn[:,-2]
+            self.Umn[:,0] = self.Umn[:,-2].copy()
+            self.Uen[:,0] = self.Uen[:,-2].copy()
+            self.Upxn[:,0] = self.Upxn[:,-2].copy()
+            self.Upyn[:,0] = self.Upyn[:,-2].copy()
         elif border == 'right':
-            self.Umn[:,-1] = self.Umn[:,1]
-            self.Uen[:,-1] = self.Uen[:,1]
-            self.Upxn[:,-1] = self.Upxn[:,1]
-            self.Upyn[:,-1] = self.Upyn[:,1]
+            self.Umn[:,-1] = self.Umn[:,1].copy()
+            self.Uen[:,-1] = self.Uen[:,1].copy()
+            self.Upxn[:,-1] = self.Upxn[:,1].copy()
+            self.Upyn[:,-1] = self.Upyn[:,1].copy()
         else:
             raise ValueError('Border must be "left", "right", "top" or "bottom"')
 
     def update(self):
-        self.Um = self.Umn
-        self.Upx = self.Upxn
-        self.Upy = self.Upyn
-        self.Ue = self.Uen
-        self.pres = self.presn
-        self.vx = self.vxn
-        self.vy = self.vyn 
+        self.Um = self.Umn.copy()
+        self.Upx = self.Upxn.copy()
+        self.Upy = self.Upyn.copy()
+        self.Ue = self.Uen.copy()
+        self.pres = self.presn.copy()
+        self.vx = self.vxn.copy()
+        self.vy = self.vyn.copy()

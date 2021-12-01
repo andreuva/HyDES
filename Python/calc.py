@@ -1,13 +1,13 @@
 import numpy as np
 
-def deriv2D(array, dx=None, dy=None):
+def deriv2D(array, dx=None, dy=None, axis=0):
 
-    if dx:
-        deriv = ( (array[1:,0:-1] - array[0:-1,0:-1])/dx + (array[1:,1:] - array[0:-1,1:])/dx )/2.0
-    elif dy:
-        deriv = ( (array[0:-1,1:] - array[0:-1,0:-1])/dy + (array[1:,1:] - array[1:,0:-1])/dy )/2.0
+    if axis == 0:
+        deriv = ( (array[:-1,1:] - array[:-1,:-1])/dx + (array[1:,1:] - array[1:,:-1])/dx )/2.0
+    elif axis == 1:
+        deriv = ( (array[1:,:-1] - array[:-1,:-1])/dy + (array[1:,1:] - array[:-1,1:])/dy )/2.0
     else:
-        raise ValueError("Must specify dx or dy")
+        raise ValueError("Must specify axis = 0 (x) or axis = 1 (y)")
 
     return deriv
 
