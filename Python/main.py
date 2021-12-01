@@ -6,7 +6,7 @@ from initCond import check_inputs, compute_initial_conditions
 
 
 # read the input file
-with open('parameter_files/params.json') as file:
+with open('C:\\Users\\andre\\OneDrive\\Escritorio\\ACCESO RAPIDO\\proyectos\\HyDES\\Python\\parameter_files\\params.json') as file:
     params = json.load(file)
 
 check_inputs(params)
@@ -49,12 +49,14 @@ while itteration < params["maxIter"] and time < params["maxTime"]:
     # exchange the old variables and the new ones
     state.update()
 
-    # update the display
-    display.update(domain, state, time)
+    # update the display if necessary
+    if itteration % params["pltCad"] == 0:
+        display.update(domain, state, time)
 
     # update the time
     time += dt
     itteration += 1
+
     print("----------------------------------")
     print("Time: ", time)
     print("Iteration: ", itteration)

@@ -12,12 +12,15 @@ class domain:
         self.xres = params["xres"]
         self.yres = params["yres"]
 
-        # Initialize the domain
-        self.x = np.linspace(self.xmin, self.xmax, self.xres)
-        self.y = np.linspace(self.ymin, self.ymax, self.yres)
+        self.xnum = self.xres + 2
+        self.ynum = self.yres + 2
 
-        self.dx = self.x[1] - self.x[0]
-        self.dy = self.y[1] - self.y[0]
+        self.dx = (self.xmax - self.xmin) / self.xres
+        self.dy = (self.ymax - self.ymin) / self.yres
+
+        # Initialize the domain
+        self.x = np.linspace(self.xmin - self.dx/2, self.xmax + self.dx/2, self.xnum)
+        self.y = np.linspace(self.ymin - self.dy/2, self.ymax + self.dy/2, self.ynum)
 
         self.xmesh, self.ymesh = np.meshgrid(self.x, self.y)
-        self.N = self.xres * self.yres
+        self.N = self.xnum * self.ynum

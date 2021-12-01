@@ -1,8 +1,8 @@
 {
     "domain":{
-                "xmin": -10.0, "xmax": 10.0,
-                "ymin": -5.0, "ymax": 10.0,
-                "xres":256, "yres": 256
+                "xmin": -10, "xmax": 10.0,
+                "ymin": -10, "ymax": 10.0,
+                "xres":  20, "yres": 20
             },
 
     "initCond":{
@@ -28,8 +28,8 @@
     "clf":          0.97,
     "boundCond":    "0deriv",
 
-    "pltCad":       5,
+    "pltCad":       1,
     "plotType":     "color",
-    "track":        "True",
+    "track":        "False",
     "savCad":       1000
 }

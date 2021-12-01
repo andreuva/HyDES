@@ -1,7 +1,7 @@
-256L                    nintx number of intervals in the x direction
-256L                    nintz number of intervals in the z direction
--5d0 10d0               x0, xf      bounds of physical domain in the x direction
--5d0 10d0               z0, zf      bounds of physical domain in the z direction
+20L                     nintx number of intervals in the x direction
+20L                     nintz number of intervals in the z direction
+-10d0 10d0              x0, xf      bounds of physical domain in the x direction
+-10d0 10d0              z0, zf      bounds of physical domain in the z direction
 1d6                     itmax maximum number of iterations
 1d5                     timef maximum physical time
 5L    10000L            plot cadence, store cadence - cadence for output
