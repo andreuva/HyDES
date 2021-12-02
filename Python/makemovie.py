@@ -19,9 +19,11 @@ def write_video(out, frames):
 # Read the frames from the image files
 def read_frames(path):
     frames = []
-    for filename in tqdm.tqdm(glob.glob(path)):
+    files = sorted(glob.glob(path + '/*.png'))
+    for filename in files:
         frame = cv.imread(filename)
         frames.append(frame)
+        print("Read frame: " + filename)
     return frames
 
 # Create the video
@@ -31,8 +33,8 @@ def make_video(path, filename, fps, size):
     write_video(out, frames)
 
 if __name__ == '__main__':
-    path = 'results\\'
+    path = 'C:\\Users\\andre\\OneDrive\\Escritorio\\ACCESO RAPIDO\\proyectos\\HyDES\\Python\\results\\plots_sim_Gausshock_20211202-1229'
     filename = 'movie.avi'
-    fps = 27
-    size = (1920, 1080)
+    fps = 25
+    size = (600, 600)
     make_video(path, filename, fps, size)
