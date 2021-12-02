@@ -53,7 +53,7 @@ def compute_initial_conditions(domain, params):
 
     # compute the sigma and central point in relation with the fisical domain choosed
     # sigma [sigmax, sigmay]
-    sigmax, sigmay = np.mean([[domain.xmax-domain.xmin], [domain.ymax-domain.ymin]], axis=1)/15
+    sigmax, sigmay = np.mean([[domain.xmax-domain.xmin], [domain.ymax-domain.ymin]], axis=1)/8
     xp, yp = (domain.xmax + domain.xmin)/2, (domain.ymax + domain.xmin)/2
 
     # compute the perturbation
