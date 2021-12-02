@@ -124,29 +124,54 @@ class state:
         # print("Applying boundary conditions")
         # print("Type: ", type)
         # print("Border: ", border)
-
-        if border == 'top':
-            self.Umn[0,:] = self.Umn[-2,:].copy()
-            self.Uen[0,:] = self.Uen[-2,:].copy()
-            self.Upxn[0,:] = self.Upxn[-2,:].copy()
-            self.Upyn[0,:] = self.Upyn[-2,:].copy()
-        elif border == 'bottom':
-            self.Umn[-1,:] = self.Umn[1,:].copy()
-            self.Uen[-1,:] = self.Uen[1,:].copy()
-            self.Upxn[-1,:] = self.Upxn[1,:].copy()
-            self.Upyn[-1,:] = self.Upyn[1,:].copy()
-        elif border == 'left':
-            self.Umn[:,0] = self.Umn[:,-2].copy()
-            self.Uen[:,0] = self.Uen[:,-2].copy()
-            self.Upxn[:,0] = self.Upxn[:,-2].copy()
-            self.Upyn[:,0] = self.Upyn[:,-2].copy()
-        elif border == 'right':
-            self.Umn[:,-1] = self.Umn[:,1].copy()
-            self.Uen[:,-1] = self.Uen[:,1].copy()
-            self.Upxn[:,-1] = self.Upxn[:,1].copy()
-            self.Upyn[:,-1] = self.Upyn[:,1].copy()
+        if type == "periodic":
+            if border == 'top':
+                self.Umn[0,:] = self.Umn[-2,:].copy()
+                self.Uen[0,:] = self.Uen[-2,:].copy()
+                self.Upxn[0,:] = self.Upxn[-2,:].copy()
+                self.Upyn[0,:] = self.Upyn[-2,:].copy()
+            elif border == 'bottom':
+                self.Umn[-1,:] = self.Umn[1,:].copy()
+                self.Uen[-1,:] = self.Uen[1,:].copy()
+                self.Upxn[-1,:] = self.Upxn[1,:].copy()
+                self.Upyn[-1,:] = self.Upyn[1,:].copy()
+            elif border == 'left':
+                self.Umn[:,0] = self.Umn[:,-2].copy()
+                self.Uen[:,0] = self.Uen[:,-2].copy()
+                self.Upxn[:,0] = self.Upxn[:,-2].copy()
+                self.Upyn[:,0] = self.Upyn[:,-2].copy()
+            elif border == 'right':
+                self.Umn[:,-1] = self.Umn[:,1].copy()
+                self.Uen[:,-1] = self.Uen[:,1].copy()
+                self.Upxn[:,-1] = self.Upxn[:,1].copy()
+                self.Upyn[:,-1] = self.Upyn[:,1].copy()
+            else:
+                raise ValueError('Border must be "left", "right", "top" or "bottom"')
+        elif type == "0deriv":
+            if border == 'top':
+                self.Umn[0,:] = self.Umn[1,:].copy()
+                self.Uen[0,:] = self.Uen[1,:].copy()
+                self.Upxn[0,:] = self.Upxn[1,:].copy()
+                self.Upyn[0,:] = self.Upyn[1,:].copy()
+            elif border == 'bottom':
+                self.Umn[-1,:] = self.Umn[-2,:].copy()
+                self.Uen[-1,:] = self.Uen[-2,:].copy()
+                self.Upxn[-1,:] = self.Upxn[-2,:].copy()
+                self.Upyn[-1,:] = self.Upyn[-2,:].copy()
+            elif border == 'left':
+                self.Umn[:,0] = self.Umn[:,1].copy()
+                self.Uen[:,0] = self.Uen[:,1].copy()
+                self.Upxn[:,0] = self.Upxn[:,1].copy()
+                self.Upyn[:,0] = self.Upyn[:,1].copy()
+            elif border == 'right':
+                self.Umn[:,-1] = self.Umn[:,-2].copy()
+                self.Uen[:,-1] = self.Uen[:,-2].copy()
+                self.Upxn[:,-1] = self.Upxn[:,-2].copy()
+                self.Upyn[:,-1] = self.Upyn[:,-2].copy()
+            else:
+                raise ValueError('Border must be "left", "right", "top" or "bottom"')
         else:
-            raise ValueError('Border must be "left", "right", "top" or "bottom"')
+            raise ValueError('Type must be "periodic" or "0deriv"')
 
     def update(self):
         self.Um = self.Umn.copy()

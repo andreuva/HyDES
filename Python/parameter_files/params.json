@@ -2,7 +2,7 @@
     "domain":{
                 "xmin": -10, "xmax": 10.0,
                 "ymin": -10, "ymax": 10.0,
-                "xres":  20, "yres": 20
+                "xres":  64, "yres": 64
             },
 
     "initCond":{
@@ -15,7 +15,7 @@
                 "x0":           0.1,
                 "y0":           0.1,
                 "waveNum":      15,
-                "ampl":         4e-4,
+                "ampl":         1e-2,
                 "v0":           0e0,
                 "magNum":       1e-3,
 
@@ -23,13 +23,13 @@
                         "cadence": 25}
             },
 
-    "maxIter":      1e6,
-    "maxTime":      1e5,
+    "maxIter":      1e3,
+    "maxTime":      1e2,
     "clf":          0.97,
     "boundCond":    "0deriv",
 
     "pltCad":       1,
     "plotType":     "color",
     "track":        "False",
-    "savCad":       1000
+    "savCad":       50
 }
