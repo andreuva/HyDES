@@ -1,4 +1,5 @@
 {
+    "simName":  "Gausshock",
     "domain":{
                 "xmin": -10, "xmax": 10.0,
                 "ymin": -10, "ymax": 10.0,
@@ -28,8 +29,10 @@
     "clf":          0.97,
     "boundCond":    "0deriv",
 
-    "pltCad":       5,
+    "pltCad":       1,
+    "savePlotCad":  1,
+    "saveCad":      1e3,
+    "savePath":     "results",
     "plotType":     "color",
-    "track":        "False",
-    "savCad":       50
+    "track":        "False"
 }

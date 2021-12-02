@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+import time
 
 # Class that represents the domain of the simulation
 class display:
@@ -7,6 +9,15 @@ class display:
 
         # store the type of plot to be used
         self.plot_type = params["plotType"]
+        self.savplotcad = params["savePlotCad"]
+
+        # store the path to save the plots
+        if not os.path.exists(params["savePath"]):
+            os.mkdir(params["savePath"])
+        self.savepath = os.path.join(params["savePath"], f'plots_sim_{params["simName"]}_{time.strftime("%Y%m%d-%H%M")}')
+        if not os.path.exists(self.savepath):
+            os.mkdir(self.savepath)
+
         self.simfig, self.sim_ax_list = plt.subplots(2, 2, figsize=(6,6))
         plt.rcParams['image.cmap'] = 'plasma'
         self.simfig.suptitle('2D Hydrodinamic Simulation')
@@ -21,6 +32,7 @@ class display:
         self.vmin = med - range
         self.vmax = med + range
 
+        self.numplots = 0
         self.update(domain, state)
 
     def update(self, domain, state, time=0):
@@ -62,4 +74,9 @@ class display:
         
         plt.draw()
         plt.pause(0.00001)
+
+        if self.numplots % self.savplotcad == 0:
+            self.simfig.savefig(os.path.join(self.savepath, f'plot_{time}.png'))
+
+        self.numplots += 1
         
