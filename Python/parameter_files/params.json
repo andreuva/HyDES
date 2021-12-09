@@ -3,7 +3,7 @@
     "domain":{
                 "xmin": -10, "xmax": 10.0,
                 "ymin": -10, "ymax": 10.0,
-                "xres":  256, "yres": 256
+                "xres":  512, "yres": 512
             },
 
     "initCond":{
@@ -24,8 +24,8 @@
                         "cadence": 25}
             },
 
-    "maxIter":      1e3,
-    "maxTime":      1e1,
+    "maxIter":      1e4,
+    "maxTime":      1e2,
     "clf":          0.97,
     "boundCond":    "0deriv",
 
@@ -33,6 +33,6 @@
     "savePlotCad":  1,
     "saveCad":      1e3,
     "savePath":     "results",
-    "plotType":     "color",
+    "plotType":     "quiver",
     "track":        "False"
 }
