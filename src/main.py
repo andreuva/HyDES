@@ -6,7 +6,8 @@ from initCond import check_inputs, compute_initial_conditions
 
 
 # read the input file
-with open(os.path.join(os.path.join(os.path.dirname(__file__), 'parameter_files'),'params.json')) as file:
+parent_dir = os.path.join(os.path.dirname(__file__), '..')
+with open(os.path.join(os.path.join(parent_dir, 'parameter_files'),'params.json')) as file:
     params = json.load(file)
 
 check_inputs(params)
