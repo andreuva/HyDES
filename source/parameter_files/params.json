@@ -30,7 +30,7 @@
     "boundCond":    "0deriv",
 
     "pltCad":       1,
-    "savePlotCad":  1,
+    "savePlotCad":  1e6,
     "saveCad":      1e3,
     "savePath":     "results",
     "plotType":     "quiver",
