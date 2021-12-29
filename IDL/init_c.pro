@@ -1,1 +1,0 @@
-common init,  ampl,Uminit,presinit,vxinit,vzinit,p00,Um00,v0_cs, v00,Cs00,itype,shape,boundcond , ondx, ondz, nwave
