@@ -1,4 +1,5 @@
 results/*
+others/*
 *__pycache__/*
 */__pycache__/*
 *.project
