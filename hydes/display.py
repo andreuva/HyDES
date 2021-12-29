@@ -11,12 +11,15 @@ class display:
         self.plot_type = params["plotType"]
         self.savplotcad = params["savePlotCad"]
 
-        # store the path to save the plots
-        if not os.path.exists(params["savePath"]):
-            os.mkdir(params["savePath"])
-        self.savepath = os.path.join(params["savePath"], f'plots_sim_{params["simName"]}_{time.strftime("%Y%m%d-%H%M")}')
-        if not os.path.exists(self.savepath):
-            os.mkdir(self.savepath)
+        # store the path to save the plots (if needed)
+        if str(params["savePath"]).lower() in ['none','no','n','false','0']:
+            self.savepath = None
+        else:
+            if not os.path.exists(params["savePath"]):
+                os.mkdir(params["savePath"])
+            self.savepath = os.path.join(params["savePath"], f'plots_sim_{params["simName"]}_{time.strftime("%Y%m%d-%H%M")}')
+            if not os.path.exists(self.savepath):
+                os.mkdir(self.savepath)
 
         if params["plotType"] == "quiver":
             self.nrows = 1
@@ -94,7 +97,7 @@ class display:
         plt.draw()
         plt.pause(0.00001)
 
-        if self.numplots % self.savplotcad == 0:
+        if self.numplots % self.savplotcad == 0 and self.savepath is not None:
             self.simfig.savefig(os.path.join(self.savepath, f'plot_{time}.png'))
 
         self.numplots += 1

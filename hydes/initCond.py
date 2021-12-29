@@ -1,6 +1,6 @@
 import numpy as np
 import warnings
-from state import state
+from .state import state
 
 def check_inputs(params):
     if params["clf"] >= 0.99:

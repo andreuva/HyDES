@@ -1,5 +1,5 @@
 import numpy as np
-from calc import deriv2D, midval
+from .calc import deriv2D, midval
 
 class state:
     def __init__(self, params):

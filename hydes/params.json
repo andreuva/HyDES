@@ -29,10 +29,10 @@
     "clf":          0.97,
     "boundCond":    "0deriv",
 
-    "pltCad":       1,
-    "savePlotCad":  1,
-    "saveCad":      1e3,
-    "savePath":     "results",
+    "savePath":     "None",
     "plotType":     "quiver",
-    "track":        "False"
+    "track":        "False",
+    "pltCad":       1,
+    "savePlotCad":  1e6,
+    "saveCad":      1e3
 }
