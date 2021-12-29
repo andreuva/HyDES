@@ -1,9 +1,9 @@
 import json
 from importlib import resources
 import io, os
-from domain import domain as dmn
-from display import display as dsp
-from initCond import check_inputs, compute_initial_conditions
+from .domain import domain as dmn
+from .display import display as dsp
+from .initCond import check_inputs, compute_initial_conditions
 
 
 # read the input file
