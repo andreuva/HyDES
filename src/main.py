@@ -1,14 +1,20 @@
 import json
-import os
+from importlib import resources
+import io, os
 from domain import domain as dmn
 from display import display as dsp
 from initCond import check_inputs, compute_initial_conditions
 
 
 # read the input file
-parent_dir = os.path.join(os.path.dirname(__file__), '..')
-with open(os.path.join(os.path.join(parent_dir, 'parameter_files'),'params.json')) as file:
-    params = json.load(file)
+# parent_dir = os.path.join(os.path.dirname(__file__), '..')
+# with open(os.path.join(os.path.join(parent_dir, 'parameter_files'),'params.json')) as file:
+#     params = json.load(file)
+
+with resources.open_binary('parameter_files', 'params.json') as file:
+    param_file = file.read()
+
+params = json.load(io.BytesIO(param_file))
 
 check_inputs(params)
 
