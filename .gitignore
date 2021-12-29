@@ -4,3 +4,4 @@ others/*
 */__pycache__/*
 *.project
 */results/*
+venv/*
