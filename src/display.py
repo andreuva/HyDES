@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import os
+import os, sys
 import time
 
 # Class that represents the domain of the simulation
@@ -15,6 +15,11 @@ class display:
         if str(params["savePath"]).lower() in ['none','no','n','false','0']:
             self.savepath = None
         else:
+
+            # complete the save path and print it to the screen
+            namespace = sys._getframe(1).f_globals  # caller's globals
+            params["savePath"] = os.path.join(os.path.dirname(namespace['__file__']), params["savePath"])
+
             if not os.path.exists(params["savePath"]):
                 os.mkdir(params["savePath"])
             self.savepath = os.path.join(params["savePath"], f'plots_sim_{params["simName"]}_{time.strftime("%Y%m%d-%H%M")}')
@@ -101,4 +106,3 @@ class display:
             self.simfig.savefig(os.path.join(self.savepath, f'plot_{time}.png'))
 
         self.numplots += 1
-        

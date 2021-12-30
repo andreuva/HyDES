@@ -1,6 +1,6 @@
 import numpy as np
 import warnings
-from .state import state
+from state import state
 
 def check_inputs(params):
     if params["clf"] >= 0.99:
@@ -9,8 +9,8 @@ def check_inputs(params):
     # warn if the rain is activated outside a gaussian mode
     if str(params["initCond"]["rain"]["active"]).lower() in ['true','y','t','yes', '1'] and \
     str(params["initCond"]["type"]).lower() != 'gaussian':
-        params["initCond"]["rain"]["active"] = True
-        warnings.warn('WARNING: RAIN IS ACTIVATED IN A NON GAUSSIAN MODE')
+        if params["initCond"]["rain"]["active"] == True:
+            warnings.warn('WARNING: RAIN IS ACTIVATED IN A NON GAUSSIAN MODE')
 
     # Force 0 derivative at the boundaries if we are simulating a packet
     if str(params["initCond"]["type"]).lower() == 'packet':

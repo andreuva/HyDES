@@ -1,5 +1,7 @@
 import numpy as np
-from .calc import deriv2D, midval
+from calc import deriv2D, midval
+import os
+
 
 class state:
     def __init__(self, params):
@@ -181,3 +183,19 @@ class state:
         self.pres = self.presn.copy()
         self.vx = self.vxn.copy()
         self.vy = self.vyn.copy()
+
+    # save the state of the simulation saving the state variables
+    def save_state(self, path='', itt=0):
+        
+        print("Saving state")
+        path = os.path.join(path,'snapshots')
+        if not os.path.exists(path):
+            os.mkdir(path)
+
+        np.save(os.path.join(path,f'{itt}_Um'), self.Um)
+        np.save(os.path.join(path,f'{itt}_Upx'), self.Upx)
+        np.save(os.path.join(path,f'{itt}_Upy'), self.Upy)
+        np.save(os.path.join(path,f'{itt}_Ue'), self.Ue)
+        np.save(os.path.join(path,f'{itt}_pres'), self.pres)
+        np.save(os.path.join(path,f'{itt}_vx'), self.vx)
+        np.save(os.path.join(path,f'{itt}_vy'), self.vy)
