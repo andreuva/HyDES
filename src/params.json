@@ -1,14 +1,14 @@
 {
-    "simName":  "Gausshock",
+    "simName":  "SampleSim",
     "domain":{
                 "xmin": -10, "xmax": 10.0,
                 "ymin": -10, "ymax": 10.0,
-                "xres":  512, "yres": 512
+                "xres":  128, "yres": 128
             },
 
     "initCond":{
-                "type":         "packet",
-                "shape":        "discont",
+                "type":         "gaussian",
+                "subtype":      "discont",
                 "ondx":         3,
                 "ondy":         3,
                 "sizParallel":  1,
@@ -24,15 +24,15 @@
                         "cadence": 25}
             },
 
-    "maxIter":      1e4,
+    "maxIter":      1e3,
     "maxTime":      1e2,
     "clf":          0.97,
     "boundCond":    "0deriv",
 
-    "savePath":     "None",
-    "plotType":     "quiver",
-    "track":        "False",
-    "pltCad":       1,
-    "savePlotCad":  1e6,
-    "saveCad":      1e3
+    "plotType":     "color",
+    "pltCad":       5e1,
+    "savePlotCad":  1,
+    "saveCad":      1e2,
+    "savePath":     "results"
+
 }

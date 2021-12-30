@@ -1,20 +1,26 @@
 import json
 # from importlib import resources
 import os #, io
-from .domain import domain as dmn
-from .display import display as dsp
-from .initCond import check_inputs, compute_initial_conditions
+from domain import domain as dmn
+from display import display as dsp
+from initCond import check_inputs, compute_initial_conditions
 
 
-def run_sim():
+def load_sample_params():
 
-    # read the input file
+    # load the parameters from the input file
     with open(os.path.join(os.path.dirname(__file__),'params.json')) as file:
         params = json.load(file)
 
     # with resources.open_binary('parameter_files', 'params.json') as file:
     #     param_file = file.read()
     # params = json.load(io.BytesIO(param_file))
+
+    return params
+
+
+
+def run_sim(params=load_sample_params()):
 
     check_inputs(params)
 
@@ -68,3 +74,11 @@ def run_sim():
         print("Time: ", time)
         print("Iteration: ", itteration)
         print("----------------------------------")
+
+        # saving the state of the simulation if necessary
+        if str(params["savePath"]).lower() not in ['none','no','n','false','0']:
+            if itteration % params["saveCad"] == 0:
+                state.save_state(params["savePath"], itteration)
+
+if __name__ == "__main__":
+    run_sim()

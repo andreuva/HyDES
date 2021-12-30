@@ -3,15 +3,18 @@ import cv2
 import glob
 from tqdm import tqdm
 
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('animacion.avi' ,fourcc ,15 ,(1200,1200))
 
-lista = sorted(glob.glob('*'))
+def animacion(name='animation', frames='*', path_out='', fps=15, size=(1200,1200)):
+	
+	fourcc = cv2.VideoWriter_fourcc(*'XVID')
+	out = cv2.VideoWriter(f'{path_out}{name}.avi' ,fourcc ,fps ,size)
 
-for imag in tqdm(lista):
-	img = cv2.imread(imag)
-	# print(imag)
-	# img = cv2.resize(img,(1000,1000)) #redimensionar
-	out.write(img)
+	lista = sorted(glob.glob(frames))
 
-out.release()
+	for imag in tqdm(lista):
+		img = cv2.imread(imag)
+		print(f'writting image {imag} to video')
+		img = cv2.resize(img,size) #redimensionar
+		out.write(img)
+
+	out.release()
