@@ -12,19 +12,10 @@ class display:
         self.savplotcad = params["savePlotCad"]
 
         # store the path to save the plots (if needed)
-        if str(params["savePath"]).lower() in ['none','no','n','false','0']:
-            self.savepath = None
+        if params["savePath"]:
+            self.savepath = params["savePathPlots"]
         else:
-
-            # complete the save path and print it to the screen
-            namespace = sys._getframe(1).f_globals  # caller's globals
-            params["savePath"] = os.path.join(os.path.dirname(namespace['__file__']), params["savePath"])
-
-            if not os.path.exists(params["savePath"]):
-                os.mkdir(params["savePath"])
-            self.savepath = os.path.join(params["savePath"], f'plots_sim_{params["simName"]}_{time.strftime("%Y%m%d-%H%M")}')
-            if not os.path.exists(self.savepath):
-                os.mkdir(self.savepath)
+            self.savepath = None
 
         if params["plotType"] == "quiver":
             self.nrows = 1
