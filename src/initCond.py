@@ -1,16 +1,10 @@
 import numpy as np
-import warnings
+import warnings, os, sys, time
 from state import state
 
 def check_inputs(params):
     if params["clf"] >= 0.99:
         warnings.warn(f'WARNING: Cfl param is {params["clf"]} stability may be compromised')
-
-    # warn if the rain is activated outside a gaussian mode
-    if str(params["initCond"]["rain"]["active"]).lower() in ['true','y','t','yes', '1'] and \
-    str(params["initCond"]["type"]).lower() != 'gaussian':
-        if params["initCond"]["rain"]["active"] == True:
-            warnings.warn('WARNING: RAIN IS ACTIVATED IN A NON GAUSSIAN MODE')
 
     # Force 0 derivative at the boundaries if we are simulating a packet
     if str(params["initCond"]["type"]).lower() == 'packet':
@@ -28,20 +22,29 @@ def check_inputs(params):
     if params["domain"]["yres"] <= 2:
         raise ValueError(f'yres must be greater than 2 and is {params["domain"]["yres"]}')
 
-    # make sure that the wavenumbers are lees than the lenght
-    if params["initCond"]["ondx"] > params["domain"]["xres"] or\
-       params["initCond"]["ondy"] > params["domain"]["yres"]:
-        raise ValueError('The wavenumber of the initial condition is greater than the number of intervals')
-
     # check the boundary conditions and puts the 'periodic' as default
     if str(params["boundCond"]).lower() not in ['periodic', '0deriv']:
         raise ValueError('boundcond must be "periodic" or "0deriv"')
 
-    # warn if no wave is selected in the wave modes
-    if params["initCond"]["ondx"] == 0 and params["initCond"]["ondy"] == 0 and \
-       str(params["initCond"]["type"]).lower() in ['sound wave', 'chladni', 'packet']:
-        warnings.warn(f'WARNING: There are no modes selected kx=0,ky=0 : ky=1 has been set')
-        params["initCond"]["ondy"] = 1
+    # check the path to save the outputs
+    # store the path to save the plots (if needed)
+    if str(params["savePath"]).lower() in ['none','no','n','false','0']:
+        params["savePath"] = None
+    else:
+        # complete the save path and print it to the screen
+        namespace = sys._getframe(1).f_globals  # caller's globals
+        params["savePath"] = os.path.join(os.path.dirname(namespace['__file__']), params["savePath"])
+        
+        if not os.path.exists(params["savePath"]):
+            os.mkdir(params["savePath"])
+        # add simulation name to the save path
+        params["savePath"] = os.path.join(params["savePath"], f'sim_{params["simName"]}_{time.strftime("%Y%m%d-%H%M")}')
+
+        if not os.path.exists(params["savePath"]):
+            os.mkdir(params["savePath"])
+        params["savePathPlots"] = os.path.join(params["savePath"], 'plots')
+        if not os.path.exists(params["savePathPlots"]):
+            os.mkdir(params["savePathPlots"])
 
 
 # Calculate the arrays of density, velocity and pressure at time t=0.

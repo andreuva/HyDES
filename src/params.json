@@ -8,31 +8,20 @@
 
     "initCond":{
                 "type":         "gaussian",
-                "subtype":      "discont",
-                "ondx":         3,
-                "ondy":         3,
-                "sizParallel":  1,
-                "sizTransver":  2,
-                "x0":           0.1,
-                "y0":           0.1,
-                "waveNum":      15,
+                "subtype":      "shock",
                 "ampl":         2,
                 "v0":           0e0,
-                "magNum":       1e-3,
-
-                "rain":{"active": "False",
-                        "cadence": 25}
-            },
+                "magNum":       1e-3},
 
     "maxIter":      1e3,
     "maxTime":      1e2,
     "clf":          0.97,
     "boundCond":    "0deriv",
 
-    "plotType":     "color",
+    "plotType":     "quiver",
     "pltCad":       5e1,
-    "savePlotCad":  1,
-    "saveCad":      1e2,
-    "savePath":     "results"
 
+    "savePath":     "results",
+    "savePlotCad":  1,
+    "saveSnapCad":  1e2
 }

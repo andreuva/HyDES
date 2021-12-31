@@ -77,7 +77,7 @@ def run_sim(params=load_sample_params()):
 
         # saving the state of the simulation if necessary
         if str(params["savePath"]).lower() not in ['none','no','n','false','0']:
-            if itteration % params["saveCad"] == 0:
+            if itteration % params["saveSnapCad"] == 0:
                 state.save_state(params["savePath"], itteration)
 
 if __name__ == "__main__":

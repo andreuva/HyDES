@@ -9,7 +9,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 setup(
 
     name = "hydes",
-    version = "0.0.2",
+    version = "0.0.4",
     author = "Andres Vicente Arevalo",
     author_email = "andres.vicente.arevalo@gmail.com",
     description = "Hydrodinamical equation solver",
@@ -27,7 +27,7 @@ setup(
                 "License :: OSI Approved :: MIT License",
                 "Operating System :: OS Independent"
                 ],
-    packages=find_packages(where='src'),
+    py_modules=['hydes', 'calc', 'domain', 'display', 'initCond', 'state', 'animation'],
     python_requires = ">=3.6",
     install_requires=['numpy', 'matplotlib', "setuptools>=54", "wheel"],
     extras_require={'movie': ['opencv-python']},
