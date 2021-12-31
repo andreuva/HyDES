@@ -27,7 +27,7 @@ setup(
                 "License :: OSI Approved :: MIT License",
                 "Operating System :: OS Independent"
                 ],
-    packages=find_packages(where='src'),
+    py_modules=['hydes', 'calc', 'domain', 'display', 'initCond', 'state', 'animation'],
     python_requires = ">=3.6",
     install_requires=['numpy', 'matplotlib', "setuptools>=54", "wheel"],
     extras_require={'movie': ['opencv-python']},
