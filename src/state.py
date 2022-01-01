@@ -1,6 +1,6 @@
 import numpy as np
 from calc import deriv2D, midval
-import os
+import os, glob
 
 
 class state:
@@ -49,7 +49,7 @@ class state:
         self.Uen  = self.Ue.copy()
         self.Upxn = self.Upx.copy()
         self.Upyn = self.Upy.copy()
-    
+
     def advance_step(self, domain, dt):
         # initialaice the arrays wich will contain the derivates of the fluxes  
         self.fmxdx  = self.fmx.copy();      self.fmydy  = self.fmy.copy()
@@ -199,3 +199,14 @@ class state:
         np.save(os.path.join(path,f'{itt}_pres'), self.pres)
         np.save(os.path.join(path,f'{itt}_vx'), self.vx)
         np.save(os.path.join(path,f'{itt}_vy'), self.vy)
+
+    # load the state from npy files in path
+    def load_snapshot(self, path):
+        print("Loading snapshot")
+        self.Um = np.load(f'{path}_Um.npy')
+        self.Upx = np.load(f'{path}_Upx.npy')
+        self.Upy = np.load(f'{path}_Upy.npy')
+        self.Ue = np.load(f'{path}_Ue.npy')
+        self.pres = np.load(f'{path}_pres.npy')
+        self.vx = np.load(f'{path}_vx.npy')
+        self.vy = np.load(f'{path}_vy.npy')

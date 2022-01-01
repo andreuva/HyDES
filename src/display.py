@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import os, sys
-import time
+import os
 
 # Class that represents the domain of the simulation
 class display:
@@ -43,8 +42,8 @@ class display:
         self.numplots = 0
         self.update(domain, state)
 
-    def update(self, domain, state, time=0):
-        # Plot the state        
+    def update(self, domain, state, itt=0, saveplot=True, makeplot=False):
+        # Plot the state
         if self.plot_type == "contourf":
             ax_list = self.sim_ax_list.ravel()
             ax_list[0].set_title('Density')
@@ -90,10 +89,12 @@ class display:
             for ax in ax_list:
                 ax.label_outer()
         
-        plt.draw()
-        plt.pause(0.00001)
+        if makeplot:
+            plt.draw()
+            plt.show(block=False)
+            plt.pause(0.01)
 
-        if self.numplots % self.savplotcad == 0 and self.savepath is not None:
-            self.simfig.savefig(os.path.join(self.savepath, f'plot_{time}.png'))
+        if saveplot and self.savepath is not None:
+            self.simfig.savefig(os.path.join(self.savepath, f'plot_{1000000 + itt}.png'))
 
         self.numplots += 1

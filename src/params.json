@@ -8,20 +8,19 @@
 
     "initCond":{
                 "type":         "gaussian",
-                "subtype":      "shock",
-                "ampl":         2,
-                "v0":           0e0,
+                "ampl":         0.75,
+                "v0":           1e0,
                 "magNum":       1e-3},
 
-    "maxIter":      1e3,
+    "maxIter":      3e2,
     "maxTime":      1e2,
     "clf":          0.97,
-    "boundCond":    "0deriv",
+    "boundCond":    "periodic",
 
-    "plotType":     "quiver",
-    "pltCad":       5e1,
+    "plotType":     "contourf",
+    "pltCad":       1,
+    "savePlotCad":  1e4,
 
     "savePath":     "results",
-    "savePlotCad":  1,
     "saveSnapCad":  1e2
 }
