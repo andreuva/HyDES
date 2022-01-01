@@ -1,10 +1,11 @@
 import json
-# from importlib import resources
-import os #, io
+import os
+import numpy as np
+from copy import deepcopy
 from domain import domain as dmn
 from display import display as dsp
-from initCond import check_inputs, compute_initial_conditions
-
+from initCond import check_inputs
+import state as stt
 
 def load_sample_params():
 
@@ -19,8 +20,27 @@ def load_sample_params():
     return params
 
 
+def sample_perturbation(params=load_sample_params()):
+    
+    domain = dmn(params["domain"])
+    # compute the sigma and central point in relation with the fisical domain choosed
+    # sigma [sigmax, sigmay]
+    sigmax, sigmay = np.mean([[domain.xmax-domain.xmin], [domain.ymax-domain.ymin]], axis=1)/8
+    xp, yp = (domain.xmax + domain.xmin)/2, (domain.ymax + domain.xmin)/2
 
-def run_sim(params=load_sample_params()):
+    # compute the perturbation
+    # pert = np.exp(-((domain.xmesh-xp)**2/(2*sigmax**2) + (domain.ymesh-yp)**2/(2*sigmay**2)))
+    pert = np.exp(-(((domain.xmesh-xp)/sigmax)**2 + ((domain.ymesh-yp)/sigmay)**2))
+    pert_vx = pert*2*(domain.xmesh-xp)/sigmax
+    pert_vy = pert*2*(domain.ymesh-yp)/sigmay
+
+    return pert, pert_vx, pert_vy
+
+
+def run_sim(params=load_sample_params(),
+            pert=sample_perturbation()[0],
+            pert_vx=sample_perturbation()[1],
+            pert_vy=sample_perturbation()[2]):
 
     check_inputs(params)
 
@@ -28,7 +48,13 @@ def run_sim(params=load_sample_params()):
     domain = dmn(params["domain"])
 
     # create the state variables with the initial conditions
-    state = compute_initial_conditions(domain, params["initCond"])
+    # initialize the state class
+    init_state = stt.state(params["initCond"])
+
+    # add the perturbation to the initial conditions
+    init_state.initilice_conditions(pert, pert_vx, pert_vy, params["initCond"]["ampl"])
+    state = deepcopy(init_state)
+    # state = compute_initial_conditions(domain, params["initCond"])
 
     # Initialize the display
     display = dsp(domain, state, params)
@@ -64,7 +90,17 @@ def run_sim(params=load_sample_params()):
 
         # update the display if necessary
         if itteration % params["pltCad"] == 0:
-            display.update(domain, state, time)
+            makeplot=True
+        else:
+            makeplot=False
+
+        if itteration % params["savePlotCad"] == 0:
+            saveplot=True
+        else:
+            saveplot=False
+
+        if saveplot or makeplot:
+            display.update(domain, state, itteration, saveplot, makeplot)
 
         # update the time
         time += dt

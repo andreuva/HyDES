@@ -3,13 +3,12 @@
     "domain":{
                 "xmin": -10, "xmax": 10.0,
                 "ymin": -10, "ymax": 10.0,
-                "xres":  128, "yres": 128
+                "xres":  256, "yres": 256
             },
 
     "initCond":{
                 "type":         "gaussian",
-                "subtype":      "shock",
-                "ampl":         2,
+                "ampl":         1,
                 "v0":           0e0,
                 "magNum":       1e-3},
 
@@ -18,10 +17,10 @@
     "clf":          0.97,
     "boundCond":    "0deriv",
 
-    "plotType":     "quiver",
-    "pltCad":       5e1,
+    "plotType":     "contourf",
+    "pltCad":       5,
+    "savePlotCad":  10,
 
     "savePath":     "results",
-    "savePlotCad":  1,
     "saveSnapCad":  1e2
 }
