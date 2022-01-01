@@ -29,7 +29,7 @@ setup(
                 ],
     py_modules=['hydes', 'calc', 'domain', 'display', 'initCond', 'state', 'animation'],
     python_requires = ">=3.6",
-    install_requires=['numpy', 'matplotlib', "setuptools>=54", "wheel", "opencv-python"],
-    extras_require={'movie': ['opencv-python']},
+    install_requires=['numpy', 'matplotlib', "opencv-python"],
+    extras_require={'dev': ["setuptools>=54", "wheel", "twine"]},
     package_data={'sample_params': ['params.json']},
 )
