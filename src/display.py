@@ -92,9 +92,9 @@ class display:
         if makeplot:
             plt.draw()
             plt.show(block=False)
-            plt.pause(0.001)
+            plt.pause(0.01)
 
         if saveplot and self.savepath is not None:
-            self.simfig.savefig(os.path.join(self.savepath, f'plot_{itt}.png'))
+            self.simfig.savefig(os.path.join(self.savepath, f'plot_{1000000 + itt}.png'))
 
         self.numplots += 1

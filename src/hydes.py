@@ -88,6 +88,16 @@ def run_sim(params=load_sample_params(),
         # exchange the old variables and the new ones
         state.update()
 
+
+        # update the time
+        time += dt
+        itteration += 1
+
+        print("----------------------------------")
+        print("Time: ", time)
+        print("Iteration: ", itteration)
+        print("----------------------------------")
+
         # update the display if necessary
         if itteration % params["pltCad"] == 0:
             makeplot=True
@@ -102,19 +112,12 @@ def run_sim(params=load_sample_params(),
         if saveplot or makeplot:
             display.update(domain, state, itteration, saveplot, makeplot)
 
-        # update the time
-        time += dt
-        itteration += 1
-
-        print("----------------------------------")
-        print("Time: ", time)
-        print("Iteration: ", itteration)
-        print("----------------------------------")
-
         # saving the state of the simulation if necessary
         if str(params["savePath"]).lower() not in ['none','no','n','false','0']:
             if itteration % params["saveSnapCad"] == 0:
                 state.save_state(params["savePath"], itteration)
+
+    return domain["savePath"]
 
 if __name__ == "__main__":
     run_sim()

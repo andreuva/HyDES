@@ -3,7 +3,7 @@
     "domain":{
                 "xmin": -10, "xmax": 10.0,
                 "ymin": -10, "ymax": 10.0,
-                "xres":  256, "yres": 256
+                "xres":  128, "yres": 128
             },
 
     "initCond":{
@@ -12,14 +12,14 @@
                 "v0":           0e0,
                 "magNum":       1e-3},
 
-    "maxIter":      1e3,
+    "maxIter":      3e2,
     "maxTime":      1e2,
     "clf":          0.97,
     "boundCond":    "0deriv",
 
     "plotType":     "contourf",
-    "pltCad":       5,
-    "savePlotCad":  10,
+    "pltCad":       1e3,
+    "savePlotCad":  1,
 
     "savePath":     "results",
     "saveSnapCad":  1e2
