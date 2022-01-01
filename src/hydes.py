@@ -40,7 +40,8 @@ def sample_perturbation(params=load_sample_params()):
 def run_sim(params=load_sample_params(),
             pert=sample_perturbation()[0],
             pert_vx=sample_perturbation()[1],
-            pert_vy=sample_perturbation()[2]):
+            pert_vy=sample_perturbation()[2],
+            restore_path=False):
 
     check_inputs(params)
 
@@ -53,6 +54,11 @@ def run_sim(params=load_sample_params(),
 
     # add the perturbation to the initial conditions
     init_state.initilice_conditions(pert, pert_vx, pert_vy, params["initCond"]["ampl"])
+
+    if restore_path:
+        # restore the state from the previous run
+        init_state.load_snapshot(restore_path)
+
     state = deepcopy(init_state)
     # state = compute_initial_conditions(domain, params["initCond"])
 
@@ -117,7 +123,7 @@ def run_sim(params=load_sample_params(),
             if itteration % params["saveSnapCad"] == 0:
                 state.save_state(params["savePath"], itteration)
 
-    return domain["savePath"]
+    return params["savePath"]
 
 if __name__ == "__main__":
     run_sim()
