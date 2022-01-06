@@ -9,7 +9,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 setup(
 
     name = "hydes",
-    version = "0.0.4",
+    version = "0.0.5",
     author = "Andres Vicente Arevalo",
     author_email = "andres.vicente.arevalo@gmail.com",
     description = "Hydrodinamical equation solver",
